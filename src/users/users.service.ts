@@ -49,7 +49,8 @@ export class UsersService {
         return user
     }
 
-    async updateRefreshToken(userId: number, refreshToken: string)  {
+    async updateRefreshToken(userId: number, refreshToken: string | null)  {
+        
         return this.userRepository.update(userId, {refreshToken})
     }
 }

@@ -28,9 +28,4 @@ export class AuthGuard implements CanActivate {
 
         return type === 'Bearer' ? token : undefined
     }
-
-    private validateRequest(request : any) : boolean{
-        const authHeader = request.headers['authorization'] || request.header['authorization']
-        return authHeader === 'secret-token'
-    }
 }

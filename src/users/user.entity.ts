@@ -15,8 +15,8 @@ export class User{
     @Column()
     email: string
 
-    @Column({nullable: true})
-    refreshToken: string
+    @Column({nullable: true, type: "varchar"})
+    refreshToken: string | null
 
     @OneToMany(() => Note, (note) => note.user)
     notes: Note[];

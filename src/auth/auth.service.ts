@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginAuthDto } from './dto/login.dto';
@@ -43,6 +43,10 @@ export class AuthService {
 
             const user = await this.usersService.findById(sub)
 
+            if (!user.refreshToken) {
+                throw new UnauthorizedException()
+            }
+
             const isMatch = await bcrypt.compare(refresh_token, user.refreshToken)
 
             if (!isMatch) {
@@ -57,5 +61,11 @@ export class AuthService {
         } catch{
             throw new UnauthorizedException()
         }
+    }
+
+    async logout(userId: number) {
+        const user = await this.usersService.findById(userId)
+
+        await this.usersService.updateRefreshToken(user.id, null)
     }
 }
