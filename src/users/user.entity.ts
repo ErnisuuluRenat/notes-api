@@ -15,6 +15,9 @@ export class User{
     @Column()
     email: string
 
+    @Column({nullable: true})
+    refreshToken: string
+
     @OneToMany(() => Note, (note) => note.user)
     notes: Note[];
 }

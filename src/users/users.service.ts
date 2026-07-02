@@ -13,6 +13,16 @@ export class UsersService {
         return await this.userRepository.find()
     }
 
+    async findById(userId: number): Promise<User> {
+        const user = await this.userRepository.findOneBy({id: userId})
+
+        if (!user) {
+            throw new NotFoundException()
+        }
+
+        return user
+    } 
+
     async create(dto : CreateUserDto) : Promise<Omit<CreateUserDto, "password">>{
         const saltRounds = 10
         const hash = await bcrypt.hash(dto.password, saltRounds)
@@ -37,5 +47,9 @@ export class UsersService {
         }
 
         return user
+    }
+
+    async updateRefreshToken(userId: number, refreshToken: string)  {
+        return this.userRepository.update(userId, {refreshToken})
     }
 }
