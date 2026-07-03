@@ -8,7 +8,7 @@ import { CurrentUser } from './decorators/current-user.decorator';
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService){}
-    @Post()
+    @Post("/login")
     login(@Body() dto: LoginAuthDto) {
         return this.authService.login(dto)
     }
