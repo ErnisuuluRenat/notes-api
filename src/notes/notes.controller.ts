@@ -5,7 +5,9 @@ import { NotesService } from './notes.service';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth('token')
 @Controller('notes')
 @UseGuards(AuthGuard)
 export class NotesController {
